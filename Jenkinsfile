@@ -7,10 +7,18 @@ pipeline {
         maven 'maven3'
     }
 
+    // Start a build automatically when GitHub sends a push webhook
+    triggers {
+        githubPush()
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/DhiaAllagui/dhiaallagui.git'
+                // 'github-creds' = ID of the credential in Manage Jenkins -> Credentials
+                git branch: 'main',
+                    url: 'https://github.com/DhiaAllagui/dhiaallagui.git',
+                    credentialsId: 'github-creds'
                 sh 'ls -la'
             }
         }
