@@ -3,8 +3,8 @@ pipeline {
 
     // Names must match Manage Jenkins -> Tools
     tools {
-        jdk 'jdk21'
-        maven 'maven3'
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
     }
 
     // Start a build automatically when GitHub sends a push webhook
