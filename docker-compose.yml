@@ -1,6 +1,7 @@
 # Structure from Chapter 3, slide 25: MySQL -> Spring Boot -> Angular
-# Images are published on Docker Hub (dhiaallagui/...). "build" lets you
-# rebuild them locally, then publish them with: docker compose push
+# springapp uses backend-app, the private Docker Hub repo (free plan: 1 private repo),
+# also published by the CD pipeline. devops-front is public.
+# "build" lets you rebuild the images locally, then publish them with: docker compose push
 services:
   mysqldb:
     image: mysql:8.0
@@ -21,7 +22,7 @@ services:
       retries: 20
 
   springapp:
-    image: dhiaallagui/devops-app:1.0.0
+    image: dhiaallagui/backend-app:latest
     build: ./backend
     depends_on:
       mysqldb:

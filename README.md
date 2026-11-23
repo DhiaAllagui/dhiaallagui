@@ -257,8 +257,8 @@ Le backend déployé est accessible sur `http://<IP_VM>:8082/entreprise/all`.
 | Service | Image | Port (VM) |
 |---|---|---|
 | `mysqldb` | `mysql:8.0` (base `devops_db`, volume `mysql-data`) | 3306 |
-| `springapp` | `dhiaallagui/devops-app:1.0.0` | 8081 |
-| `angular` | `dhiaallagui/devops-front:1.0.0` | 4200 |
+| `springapp` | `dhiaallagui/backend-app:latest` (dépôt privé) | 8081 |
+| `angular` | `dhiaallagui/devops-front:1.0.0` (dépôt public) | 4200 |
 
 ```bash
 docker compose build      # construire les images (première fois)
