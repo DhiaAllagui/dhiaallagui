@@ -227,7 +227,23 @@ pipeline {
 ## 👤 Auteur
 
 **ESPRIT — UP ASI**  
-<!-- webhook test 2026-11-22T17:09:47Z -->
 test webhook
-<!-- webhook test 2026-11-22T17:13:13Z -->
-<!-- webhook test 2026-11-23T12:47:24Z -->
+
+---
+
+## 🚀 Pipeline CD (Jenkinsfile)
+
+```
+Git → Jenkins → Build & Test Maven → Docker Build → Docker Push → Deploy MySQL → Deploy backend-app → Verify (docker ps + docker logs)
+```
+
+| Étape | Commande principale |
+|---|---|
+| Build & Test Maven | `mvn -B clean package` (tests sur base H2 en mémoire) |
+| Docker Build | `docker build -t backend-app:latest .` |
+| Docker Push | `docker login` (credential Jenkins `dockerhub-creds`), `docker tag`, `docker push <user>/backend-app:latest` |
+| Deploy MySQL | `docker run -d --name mysql --network devops-net -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test_db mysql:8.0` |
+| Deploy backend-app | `docker rm -f backend-app`, `docker pull <user>/backend-app:latest`, `docker run -d --name backend-app --network devops-net -p 8082:8080 ...` |
+| Verify | `docker ps`, `docker logs backend-app` |
+
+Le backend déployé est accessible sur `http://<IP_VM>:8082/entreprise/all`.
