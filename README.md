@@ -247,3 +247,23 @@ Git → Jenkins → Build & Test Maven → Docker Build → Docker Push → Depl
 | Verify | `docker ps`, `docker logs backend-app` |
 
 Le backend déployé est accessible sur `http://<IP_VM>:8082/entreprise/all`.
+
+---
+
+## 🐳 Docker Compose (3 services)
+
+`docker-compose.yml` lance MySQL → Spring Boot → Angular sur le réseau `devops-net` :
+
+| Service | Image | Port (VM) |
+|---|---|---|
+| `mysqldb` | `mysql:8.0` (base `devops_db`, volume `mysql-data`) | 3306 |
+| `springapp` | `dhiaallagui/devops-app:1.0.0` | 8081 |
+| `angular` | `dhiaallagui/devops-front:1.0.0` | 4200 |
+
+```bash
+docker compose build      # construire les images (première fois)
+docker compose push       # publier les images sur Docker Hub
+docker compose up -d      # lancer les 3 services
+docker compose logs -f    # suivre les logs
+docker compose down       # arrêter et supprimer les conteneurs (les données MySQL restent dans le volume)
+```
