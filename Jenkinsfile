@@ -70,7 +70,7 @@ pipeline {
                         echo "MySQL container already running"
                     else
                         docker rm -f mysql || true
-                        docker run -d --name mysql --network ${NETWORK} \
+                        docker run -d --name mysql --network ${NETWORK} --restart unless-stopped \
                             -e MYSQL_ROOT_PASSWORD=root \
                             -e MYSQL_DATABASE=test_db \
                             -v mysql-cd-data:/var/lib/mysql \
@@ -103,7 +103,7 @@ pipeline {
                         docker pull $DOCKER_USER/${IMAGE_NAME}:${IMAGE_TAG}
 
                         # Start a new container from that image
-                        docker run -d --name backend-app --network ${NETWORK} \
+                        docker run -d --name backend-app --network ${NETWORK} --restart unless-stopped \
                             -p ${BACKEND_PORT}:8080 \
                             -e SPRING_DATASOURCE_URL="jdbc:mysql://mysql:3306/test_db?createDatabaseIfNotExist=true" \
                             -e SPRING_DATASOURCE_USERNAME=root \
